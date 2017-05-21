@@ -3,19 +3,22 @@ from backtracklib import resolver
 num_respuestas = 1
 max_time = 0			# no importa el tiempo
 
-# ejemplo ordenar numeros del 1 al 10.
+# example 8 queens w/o optimizations
 
 def basecase(parcial):
-	for num in (num for num in range(10)):
-		if num not in parcial:
-			return False
-	return True
+	if len(parcial) == 8:
+		return True
 
 def CalcularPosibles(parcial):
 	ret = []
-	for num in (num for num in range(10)):
-		if num not in parcial:
-			ret.append(num)
+	for x in range(8):
+		for y in range(8):
+			is_in = False
+			for i in range(8):
+				if (x,i) in parcial or (i, y) in parcial or (x-i, y-i) in parcial or (x+i, y+i) in parcial:
+					is_in = True
+			if not is_in: 
+				ret.append((x,y))
 	return ret
 
 solucion, tiempo, todas = resolver(num_respuestas, max_time, CalcularPosibles, basecase)

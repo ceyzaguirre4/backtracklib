@@ -4,9 +4,14 @@ def resolver(num_respuestas, max_time, CalcularPosibles, basecase):
     parcial = []
     solucion = []
     t_inicio = time()
-    limit = ResolverRecursivo(parcial, solucion, num_respuestas, max_time, t_inicio,  CalcularPosibles, basecase)
-    todas = False if (limit and len(solucion) < num_respuestas) else True
-    return solucion, time() - t_inicio, todas
+    try:
+        limit = ResolverRecursivo(parcial, solucion, num_respuestas, max_time, t_inicio,  CalcularPosibles, basecase)
+        todas = False if (limit and len(solucion) < num_respuestas) else True
+        return solucion, time() - t_inicio, todas
+    except RecursionError:
+        raise Exception("Maximum recursion depth exceeded")
+    except Exception as exc:
+        raise Exception(exc)
 
 def ResolverRecursivo(parcial, solucion, num_respuestas, max_time, t_inicio,  CalcularPosibles, basecase):
     def _agregar(posible):
