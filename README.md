@@ -24,20 +24,20 @@ Easy to use tools for eficient backtracking through recursion.
 from backtracklib import solve
 
 def basecase(parcial):
-	if len(parcial) == 8:
-		return True
+    if len(parcial) == 8:
+        return True
 
 def calculate_posibles(parcial):
-	ret = []
-	for x in range(8):
-		for y in range(8):
-			is_in = False
-			for i in range(8):
-				if (x,i) in parcial or (i, y) in parcial or (x-i, y-i) in parcial or (x+i, y+i) in parcial:
-					is_in = True
-			if not is_in: 
-				ret.append((x,y))
-	return ret	# list of all posible new positions.
+    ret = []
+    for x in range(8):
+        for y in range(8):
+            is_in = False
+            for i in range(8):
+                if (x,i) in parcial or (i, y) in parcial or (x-i, y-i) in parcial or (x+i, y+i) in parcial:
+                    is_in = True
+            if not is_in: 
+                ret.append((x,y))
+    return ret    # list of all posible new positions.
 
 # default values for quantity and time are used: will take as much time as needed to find ONE answer.
 answers, time, found_all = solve(calculate_posibles, basecase)
