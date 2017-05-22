@@ -1,15 +1,12 @@
-from backtracklib import resolver
+from backtracklib import solve
 
-num_respuestas = 1
-max_time = 0			# no importa el tiempo
-
-# example 8 queens w/o optimizations
+# 8 queens problem: position 8 queens on a chessboard so that no one attacks another.
 
 def basecase(parcial):
 	if len(parcial) == 8:
 		return True
 
-def CalcularPosibles(parcial):
+def calculate_posibles(parcial):
 	ret = []
 	for x in range(8):
 		for y in range(8):
@@ -21,9 +18,11 @@ def CalcularPosibles(parcial):
 				ret.append((x,y))
 	return ret
 
-solucion, tiempo, todas = resolver(num_respuestas, max_time, CalcularPosibles, basecase)
+answers, time, found_all = solve(calculate_posibles, basecase)
 
 def test_1():
-	assert basecase(solucion[0])
+	assert basecase(answers[0])
 
-print(solucion, tiempo, todas)
+if __name__ == "__main__":
+	test_1()
+	print(answers)

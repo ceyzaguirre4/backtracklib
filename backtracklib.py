@@ -1,38 +1,37 @@
 from time import time
 
-def resolver(num_respuestas, max_time, CalcularPosibles, basecase):
+def solve(CalcularPosibles, basecase, num_answers=1, max_time=0):
     parcial = []
-    solucion = []
-    t_inicio = time()
+    answers = []
+    time_start = time()
     try:
-        limit = ResolverRecursivo(parcial, solucion, num_respuestas, max_time, t_inicio,  CalcularPosibles, basecase)
-        todas = False if (limit and len(solucion) < num_respuestas) else True
-        return solucion, time() - t_inicio, todas
+        limit = recursive_solve(parcial, answers, num_answers if num_answers != 0 else float('inf'), max_time, time_start,  CalcularPosibles, basecase)
+        found_all = False if (limit and len(answers) < num_answers) else True
+        return answers, time() - time_start, found_all
     except RecursionError:
         raise Exception("Maximum recursion depth exceeded")
     except Exception as exc:
         raise Exception(exc)
 
-def ResolverRecursivo(parcial, solucion, num_respuestas, max_time, t_inicio,  CalcularPosibles, basecase):
-    def _agregar(posible):
+def recursive_solve(parcial, answers, num_answers, max_time, time_start,  CalcularPosibles, basecase):
+    def _add(posible):
         parcial.append(posible)
-    def _sacar():
+    def _remove():
         parcial.pop()
 
-
-    if max_time and time() - t_inicio > max_time:  # si se ha demorado mas de 1 segundo, matar el proceso y devuelve lo que lleve.
+    if max_time and time() - time_start > max_time:  # si se ha demorado mas de 1 segundo, matar el proceso y devuelve lo que lleve.
         return True
     if basecase(parcial):  # incluir aca restricciones de tiempo
-        solucion.append(list(parcial))
-        return False if len(solucion) < num_respuestas else True
+        answers.append(list(parcial))
+        return False if len(answers) < num_answers else True
     else:
         posibles = CalcularPosibles(parcial)
         p = 0
-        solucionado = False
-        while not solucionado and p < len(posibles):
+        solved = False
+        while not solved and p < len(posibles):
             posible = posibles[p]
-            _agregar(posible)
-            solucionado = ResolverRecursivo(parcial, solucion, num_respuestas, max_time, t_inicio,  CalcularPosibles, basecase)
-            _sacar()
+            _add(posible)
+            solved = recursive_solve(parcial, answers, num_answers, max_time, time_start,  CalcularPosibles, basecase)
+            _remove()
             p += 1
-        return solucionado
+        return solved
