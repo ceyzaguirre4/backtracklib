@@ -4,6 +4,8 @@ Easy to use tools for eficient backtracking through recursion.
 
 ## Solve
 
+### Overview:
+
 ` solve(calculate_posibles_func, basecase, [number_of_answers], [max_time]) `
 
 `calculate_posibles_func` receives a list with earlier choices and must return an iterable with posible choices for the current step.
@@ -40,3 +42,13 @@ def calculate_posibles(parcial):
 # default values for quantity and time are used: will take as much time as needed to find ONE answer.
 answers, time, found_all = solve(calculate_posibles, basecase)
 ~~~
+
+### Optimizations and heuristics:
+
+All user entered heuristics and optimizations should be implemented in ` calculate_posibles_func `. A general rule of thumb to having a somewhat optimized algorithm is to build ` calculate_posibles_func ` in such a way that `basecase` has to check as little conditions as possible. 
+
+In some problems inputs can be subdivided into discrete sets of elements such that no posible answer will ever have two elements of the same set. In these cases its generally more efficient to only have ` calculate_posibles_func ` return valid elements of one set instead of all valid elements. Future versions of this module will implement this automatically.
+
+If a discretization such as described in the paragraph above is possible then the algorithm can be further optimized by ordering the sets in such a way that ` calculate_posibles_func ` will access first the sets with the most elements. Future versions of this module will also implement this automatically.
+
+Heuristics are dificult to find and generally unique to the problem. Some more general ones will maybe be one day implemented but for now they must be defined by the user and implemented in ` calculate_posibles_func `. Heuristics that asign a higher probability of succes to any element within the set of posibles should be implemented by ordering the return iterable of ` calculate_posibles_func ` by probability (in descending order).

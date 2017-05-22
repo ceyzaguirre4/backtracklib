@@ -19,9 +19,9 @@ def recursive_solve(parcial, answers, num_answers, max_time, time_start,  Calcul
     def _remove():
         parcial.pop()
 
-    if max_time and time() - time_start > max_time:  # si se ha demorado mas de 1 segundo, matar el proceso y devuelve lo que lleve.
+    if max_time and time() - time_start > max_time:
         return True
-    if basecase(parcial):  # incluir aca restricciones de tiempo
+    if basecase(parcial):
         answers.append(list(parcial))
         return False if len(answers) < num_answers else True
     else:
