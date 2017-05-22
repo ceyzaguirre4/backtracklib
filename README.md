@@ -2,9 +2,9 @@
 
 Easy to use tools for eficient backtracking through recursion.
 
-## Resolver
+## Solve
 
-` resolver(calculate_posibles_func, basecase, [number_of_answers], [max_time]) `
+` solve(calculate_posibles_func, basecase, [number_of_answers], [max_time]) `
 
 `calculate_posibles_func` receives a list with earlier choices and must return an iterable with posible choices for the current step.
 
@@ -14,12 +14,12 @@ Easy to use tools for eficient backtracking through recursion.
 
 `max_time ` is an intefer which can be passed to indicate the maximum time the algorithm should run (in seconds). Default value permits it to run undisturbed. Should the time limit be reached, the algorithm will return all answers found up to this point.
 
-` resolver ` returns a list with all answers found, the time it took (in seconds), and a boolean value to indicate whether it found all the answers or not (if the time limit was reached). This value will always be True if all possible values were found even if the quantity is lower than `number_of_answers`.
+` solve ` returns a list with all answers found, the time it took (in seconds), and a boolean value to indicate whether it found all the answers or not (if the time limit was reached). This value will always be True if all possible values were found even if the quantity is lower than `number_of_answers`.
 
 
 #### Example code: 8 queens
 ~~~python
-from backtracklib import resolver
+from backtracklib import solve
 
 def basecase(parcial):
 	if len(parcial) == 8:
@@ -35,7 +35,8 @@ def calculate_posibles(parcial):
 					is_in = True
 			if not is_in: 
 				ret.append((x,y))
-	return ret
+	return ret	# list of all posible new positions.
 
-answers, time, found_all = resolver(calculate_posibles, basecase)
+# default values for quantity and time are used: will take as much time as needed to find ONE answer.
+answers, time, found_all = solve(calculate_posibles, basecase)
 ~~~
