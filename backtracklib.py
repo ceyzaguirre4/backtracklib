@@ -33,32 +33,43 @@ class Solver:
     def __init__(self, CalcularPosibles, basecase):
         self.CalcularPosibles = CalcularPosibles
         self.basecase = basecase
-        self.tree = _rec_tree()
-        self.current_node = self.tree
+        self._tree = _rec_tree()
+        self.current_node = self._tree
         self._solutions, self._time, self._found_all = None, None, None
 
     @property
     def solutions(self):
-        self.solve()
+        if not self._time:
+            self.solve()
         return self._solutions
 
     @property
     def time(self):
-        self.solve()
+        if not self._time:
+            self.solve()
         return self._time
 
     @property
     def found_all(self):
-        self.solve()
+        if not self._time:
+            self.solve()
         return self._found_all
 
+    @property
+    def tree(self):
+        if not self._time:
+            self.solve()
+        return self._tree
+
     def solve(self, num_answers=1, max_time=0):
+        print("SOLVING...", end="")
         parcial = []
         answers = []
         time_start = time()
         limit = self._recursive_solve(parcial, answers, num_answers if num_answers != 0 else float('inf'), max_time, time_start)
         found_all = False if (limit and len(answers) < num_answers) else True
         self._solutions, self._time, self._found_all =  answers, time() - time_start, found_all
+        print("ANSWERS FOUND in {:.3f} seconds".format(self._time))
 
     def _recursive_solve(self, parcial, answers, num_answers, max_time, time_start):
         def _add(posible):
