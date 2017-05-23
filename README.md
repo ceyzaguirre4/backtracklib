@@ -29,10 +29,6 @@ More granular control over the amount of solutions or the maximum time the searc
 
 `max_time ` is an integer which can be passed to indicate the maximum time the algorithm should run (in seconds). Default value (0) permits it to run undisturbed. Should the time limit be reached, the algorithm will return all answers found up to this point.
 
-### Solution Trees:
-
-Solver class objects also include a `.tree` atribute which represents the recursion tree. This atribute can be printed unto screen.
-
 #### Example code: 8 queens
 
 ~~~python
@@ -62,6 +58,31 @@ gen = Solver(calculate_posibles, basecase)
 answer1 = gen.solutions[0]		# answer is computed.
 ~~~
 
+### Solution Trees:
+
+Solver class objects also include a `.tree` atribute which represents the recursion tree. This atribute can be printed using the python built-in method `print(<solver_object>.tree)`.
+
+#### Example output
+
+~~~
+(0, 0)>	(1, 2)>	(2, 1)
+		(3, 1)
+		(1, 3)>	(2, 1)
+		(3, 1)
+		(3, 2)
+		(2, 1)>	(1, 2)
+		(1, 3)
+		(2, 3)>	(3, 1)
+		(3, 2)
+		(3, 1)>	(1, 2)
+		(1, 3)
+		(2, 3)
+		(3, 2)>	(1, 3)
+		(2, 3)
+(0, 1)>	(1, 0)>	(2, 2)
+		(3, 3)
+		(1, 3)>	(2, 0)>	(3, 2)
+~~~
 
 
 ### Optimizations and heuristics:
