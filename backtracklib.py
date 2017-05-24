@@ -1,4 +1,5 @@
 from time import time
+from optimization import discretize
 
 class _rec_tree:
     def __init__(self, value=None, base=None, depth=0):
