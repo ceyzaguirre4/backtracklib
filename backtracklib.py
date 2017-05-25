@@ -1,5 +1,6 @@
 from time import time
 from optimization import discretize
+from threading import Thread
 
 class _rec_tree:
     def __init__(self, value=None, base=None, depth=0):
@@ -62,15 +63,23 @@ class Solver:
             self.solve()
         return self._tree
 
-    def solve(self, num_answers=1, max_time=0):
+    def solve(self, num_answers=1, max_time=0, threading=True):
         print("SOLVING...", end="")
         parcial = []
         answers = []
         time_start = time()
-        limit = self._recursive_solve(parcial, answers, num_answers if num_answers != 0 else float('inf'), max_time, time_start)
+        if not threading: 
+            limit = self._recursive_solve(parcial, answers, num_answers if num_answers != 0 else float('inf'), max_time, time_start)
+        else:
+            limit = self._threaded_recursive_solve(parcial, answers, num_answers if num_answers != 0 else float('inf'), max_time, time_start)
         found_all = False if (limit and len(answers) < num_answers) else True
         self._solutions, self._time, self._found_all =  answers, time() - time_start, found_all
         print("ANSWERS FOUND in {:.3f} seconds".format(self._time))
+
+    def _threaded_recursive_solve(self, parcial, answers, num_answers, max_time, time_start):
+        for elem in self.CalcularPosibles(parcial):
+            thread = Thread(target=self._recursive_solve, args=(parcial, answers, num_answers, max_time, time_start))
+            thread.start()
 
     def _recursive_solve(self, parcial, answers, num_answers, max_time, time_start):
         def _add(posible):
