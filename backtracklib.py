@@ -63,7 +63,7 @@ class Solver:
             self.solve()
         return self._tree
 
-    def solve(self, num_answers=1, max_time=0, threading=True):
+    def solve(self, num_answers=1, max_time=0, threading=False):
         print("SOLVING...", end="")
         parcial = []
         answers = []
@@ -78,10 +78,10 @@ class Solver:
 
     def _threaded_recursive_solve(self, parcial, answers, num_answers, max_time, time_start):
         for elem in self.CalcularPosibles(parcial):
-            thread = Thread(target=self._recursive_solve, args=(parcial, answers, num_answers, max_time, time_start))
+            thread = Thread(target=self._recursive_solve, args=(parcial, answers, num_answers, max_time, time_start, True))
             thread.start()
 
-    def _recursive_solve(self, parcial, answers, num_answers, max_time, time_start):
+    def _recursive_solve(self, parcial, answers, num_answers, max_time, time_start, threaded=False):
         def _add(posible):
             parcial.append(posible)
             self.current_node = self.current_node.add_branch(posible)
@@ -94,6 +94,8 @@ class Solver:
         if self.basecase(parcial):
             answers.append(list(parcial))
             return False if len(answers) < num_answers else True
+        elif threaded and len(answers) >= num_answers:
+            return True
         else:
             posibles = self.CalcularPosibles(parcial)
             p = 0

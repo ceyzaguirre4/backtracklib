@@ -23,11 +23,13 @@ Answers are not computed when the object is created. If no solutions have been c
 
 More granular control over the amount of solutions or the maximum time the search should take can be had by using the `.solve` method.
 
-`<solver_object>.solve([number_of_answers=1], [max_time=0])`
+`<solver_object>.solve([number_of_answers=1], [max_time=0], [threading=False])`
 
 `number_of_answers` is an integer which can be passed to indicate the number of answers to be calculated. Default value is 1. If number of answers is set to 0 then all posible answers will be computed.
 
 `max_time ` is an integer which can be passed to indicate the maximum time the algorithm should run (in seconds). Default value (0) permits it to run undisturbed. Should the time limit be reached, the algorithm will return all answers found up to this point.
+
+`threading ` is a boolean value that indicates whether threads should be implemented in the first step or not. The threads will cease function once the number of answers computed is equal to the number asked by the user, but if two threads reach diferent answers at roughly the same time more answers than requested can be returned.
 
 #### Example code: 8 queens
 
@@ -54,15 +56,47 @@ def calculate_posibles(parcial):
 	return ret
 
 gen = Solver(calculate_posibles, basecase)
-# answer has not been searched for yet.
-answer1 = gen.solutions[0]		# answer is computed.
+answer1 = gen.solutions[0]		# implicit solving
+~~~
+
+#### Example code: Knapsack Problem
+
+![MacDown logo](https://imgs.xkcd.com/comics/np_complete.png)
+
+Source: [xkcd](https://xkcd.com/287/)
+
+~~~python
+from backtracklib import Solver
+
+def total(parcial):
+	total = 0
+	for elem in parcial:
+		total += elem.price
+	return total
+
+def basecase(parcial):
+	if total(parcial) == "1505":
+		return True
+	return False
+
+def calculate_posibles(parcial):
+	posibles = []
+	for elem in apetizers:	# apetizers should be a list of objects that have a price atribute
+		if total(parcial) + elem.price <= 1505:
+			posibles.append(elem)
+	return posibles
+			
+
+gen = Solver(calculate_posibles, basecase)
+gen.solve(num_answers=4, threading=True) 	# explicit solving
+answers = gen.solutions
 ~~~
 
 ### Solution Trees:
 
 Solver class objects also include a `.tree` atribute which represents the recursion tree. This atribute can be printed using the python built-in method `print(<solver_object>.tree)`.
 
-#### Example output
+#### Example output of 4 queens (simplified version of 8 queens)
 
 ~~~
 (0, 0)>	(1, 2)>	(2, 1)
@@ -89,7 +123,7 @@ Solver class objects also include a `.tree` atribute which represents the recurs
 
 All user entered heuristics and optimizations should be implemented in ` calculate_posibles_func `. A general rule of thumb to having a somewhat optimized algorithm is to build ` calculate_posibles_func ` in such a way that `basecase` has to check as little conditions as possible. 
 
-In some problems inputs can be subdivided into discrete sets of elements such that no posible answer will ever have two elements of the same set (ie. in the above example no two queens will ever be in the same column). In these cases its generally more efficient to only have ` calculate_posibles_func ` return valid elements of one set instead of all valid elements. Future versions of this module will implement this automatically.
+In some problems inputs can be subdivided into discrete sets of elements such that no posible answer will ever have two elements of the same set (ie. in the above example no two queens will ever be in the same column). In these cases its generally more efficient to only have ` calculate_posibles_func ` return valid elements of one set instead of all valid elements. Future versions of this module will (hopefully) implement this automatically.
 
 If a discretization such as described in the paragraph above is possible then the algorithm can be further optimized by ordering the sets in such a way that ` calculate_posibles_func ` will access first the sets with the most elements. Future versions of this module will also implement this automatically.
 
