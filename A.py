@@ -43,8 +43,9 @@ class _Stack(list):
 			if other_cost < node.accumulated_cost:
 				node.accumulated_cost = other_cost
 				node.father = other_father
+				self.sort(key= lambda x: x.heuristic_cost + x.accumulated_cost, reverse=True)	# N log( N )
 			return
-		self._binary_insert(_Node(other, heuristic, other_father, other_cost))
+		self._binary_insert(_Node(other, heuristic, other_father, other_cost))	# log( N )
 
 	def _binary_insert(self, elem):		# orders from higher to lower added_cost, reverse: change (1), (2) for their indicated comparison
 		def _added_cost(elem):
