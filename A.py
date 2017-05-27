@@ -1,7 +1,7 @@
 from time import time
 
 
-def a(calc_posibles, start, basecase, heuristic=None, time_limit=10, reverse=False):
+def a(calc_posibles, start, basecase, heuristic=None, time_limit=0, reverse=False):
 	time_limit = float('inf') if time_limit == 0 else time_limit
 	start_time = time()
 	stack = _Stack(start, heuristic)
