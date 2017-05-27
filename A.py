@@ -25,21 +25,43 @@ class _Node:
 			return True
 		return False
 
+	def __repr__(self):
+		return str(self.value)
+
 class _Stack(list):
 	def __init__(self, start, heuristic):
 		super().__init__()
 		self.append(_Node(start, heuristic))
 	
 	def _update(self, other, other_cost, other_father, heuristic):	# adds new elements and updates values for elements that already where included.
-		for node in self:
+		for node in self:	# group into binary insert (use O(log N) and remove loop completely)
 			if node.value == other:
 				other_cost = other_cost + other_father.accumulated_cost
 				if other_cost > node.accumulated_cost:
 					node.path_cost = other_cost
 					node.father = other_father
 				return
-		self.append(_Node(other, heuristic, other_father, other_cost))		# change to use that list is ordered
-		self.sort(key=lambda x: x.heuristic_cost + x.accumulated_cost, reverse=True)
+		self._binary_insert(_Node(other, heuristic, other_father, other_cost))
+
+	def _binary_insert(self, elem):		# orders from higher to lower, to reverse change (1), (2) for their indicated comparison
+		def _added_cost(elem):
+			return elem.heuristic_cost + elem.accumulated_cost
+		if len(self):
+			added_cost = _added_cost(elem)
+			begining, end = 0, len(self)
+			split = (begining + end)//2
+			while end - begining > 1:
+				if added_cost >= _added_cost(self[split]):			# (1) <
+					end = split
+				else:
+					begining = split
+				split = (begining + end)//2
+			if added_cost > _added_cost(self[begining:end][0]):		# (2) <
+				self[begining:begining] = [elem]
+			else:
+				self[end:end] = [elem]
+		else:
+			self.append(elem)
 
 
 	def _full_path(self, position, reverse):
