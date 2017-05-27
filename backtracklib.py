@@ -64,7 +64,7 @@ class Solver:
         return self._tree
 
     def solve(self, num_answers=1, max_time=0, threading=False):
-        print("SOLVING...", end="")
+        print("SOLVING...", end=" ")
         parcial = []
         answers = []
         time_start = time()

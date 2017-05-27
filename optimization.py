@@ -10,7 +10,8 @@ def sub(l1, l2, base):
 
 def incompatibles(x, y, calculate_posibles):	# necesario?
 	x = calculate_posibles([x])
-	if y not in x: return True
+	if y not in x:
+		return True
 	return False
 
 def fully_incompatible(conjunto, calculate_posibles):
@@ -40,9 +41,9 @@ def full_set(listas, todo):
 		return True
 	return False
 
-def min_full_set(setx, todo):	# min? 
+def min_full_set(setx, todo):	# simempre el min? 
 	ret = []
-	for i in range(len(setx)):
+	for i in range(len(setx)):	# poner cota inferior
 		subs = list(itertools.combinations(setx, i))
 		for sub in subs:
 			if full_set(sub, todo):
@@ -71,13 +72,13 @@ if __name__ == "__main__":
 
 	def calculate_posibles_queens(parcial):
 
-		# 3 queens problem: position 3 queens on a chessboard so that no one attacks another (simplification of 8s)
+		# 7 queens problem: position 7 queens on a chessboard so that no one attacks another (simplification of 8s)
 
 		ret = []
-		for x in range(3):
-			for y in range(3):
+		for x in range(7):
+			for y in range(7):
 				is_in = False
-				for i in range(3):
+				for i in range(7):
 					if (x,i) in parcial or (i, y) in parcial or (x-i, y-i) in parcial or (x+i, y+i) in parcial:
 						is_in = True
 				if not is_in: 
