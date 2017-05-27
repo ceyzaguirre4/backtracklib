@@ -1,5 +1,4 @@
 from time import time
-from optimization import discretize
 from threading import Thread
 
 class _rec_tree:

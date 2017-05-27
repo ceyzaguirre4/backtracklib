@@ -16,14 +16,14 @@ def manhattan_distance(position):		# heuristic n2
 	return abs(position[0]-start[0]) + abs(position[1]-start[1])
 
 #############################
-# Calculate posibles (identical for both directions because )
+# Calculate posibles (identical for both directions because labrynth is a undirected graph)
 #############################
 
 def calculate_posibles(position):		# returns valid moves for a given position
 	ret = []
 	for valid_move in labrynth: 
 		if (valid_move[0] == position[0] and valid_move[1] == position[1] + 1) or (valid_move[0] == position[0] and valid_move[1] == position[1] - 1) or (valid_move[0] == position[0] + 1 and valid_move[1] == position[1]) or (valid_move[0] == position[0] - 1 and valid_move[1] == position[1]): 
-			ret.append((valid_move, 1)) 
+			ret.append((valid_move, 1)) 	# tuple contains element and movement cost
 	return ret
 
 #############################
