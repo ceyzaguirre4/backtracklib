@@ -195,7 +195,7 @@ def basecase1(position):	# basecase starting from the begining
 		return True
 	return False
 
-answer1 = a(calculate_posibles, start, basecase1)												# from begining to end, returns list (no heuristic:Djskra; no time limit)
+answer1 = a(calculate_posibles, start, basecase1)  # from begining to end, returns list (no heuristic:Djskra; no time limit)
 
 #############################
 # Starting from the end:
@@ -206,5 +206,5 @@ def basecase2(position):		# basecase starting from the end
 		return True
 	return False
 
-answer2 = a(calculate_posibles, end, basecase2, heuristic=manhattan_distance, reverse=True)		# from back to front, returns generator (includes heuristic cost function: A*)
+answer2 = a(calculate_posibles, end, basecase2, heuristic=manhattan_distance, reverse=True)  # from back to front, returns generator (includes heuristic cost function: A*)
 ~~~
