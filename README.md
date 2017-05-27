@@ -135,7 +135,7 @@ Heuristics are dificult to find and generally unique to the problem. Some more g
 
 `path = a(<calculate_posibles_func>, <start>, <basecase>, [heuristic=None], [time_limit=0], [reverse=False]) `
 
-This function is designed to solve all pathfinding problems regardless of whether the map/graph/etc fits in memory, or the type of each step. In order to achieve this *"one size fits all"* solution control over the heuristics, posible moves for any given position and start point are delegated to the user and integrated into the algorithm. They are passed into the funtion as parameters.
+This function is designed to solve all pathfinding problems regardless of whether the map/graph/etc fits in memory, or the type of each step. In order to achieve this *"one size fits all"* solution, control over the heuristics, posible moves for any given position and start point are delegated to the user and integrated into the algorithm. They are passed into the funtion as parameters.
 
 The bare minimums for a path to be found are:
 
@@ -143,17 +143,17 @@ The bare minimums for a path to be found are:
 
 `start `: must be of identical type as  `next_move`. It indicates the starting point of the algorithm, not necesarily the starting point of the map (for example, it is more eficient to find the way from the end to the start but more on that later).
 
-`basecase `: must be a function that only return `True` when the path arives at its intended destination. For example, in a maze solving problem starting at the entrance,  `basecase` should only return `True` when the current position is the exit of the maze. The function must receive the current position (of whatever type the user decided to create his moves).
+`basecase `: must be a function that only returns `True` when the path arives at its intended destination. For example, in a maze solving problem starting at the entrance,  `basecase` should only return `True` when the current position is the exit of the maze. The function must receive the current position (of whatever type the user decided to create his moves).
 
-The `a()` function returns a list with all the necesary next steps (where the steps are again of the same type as `next_move`) in order to reach the basecase.
+The `a()` function returns a list with all the necesary next steps (where the steps are once again of the same type as `next_move`) in order to reach the basecase.
 
 More granular control can be had by passing into `a()`:
 
-`heuristic `: is a function that returns a integer or float that represents the likelyhood of a step being the correct one where a lower value means that the step is more likely to be correct than another with a higher `heuristic` return value. It must receive one parameter to indicate the position who's value is to be computed. The one diference between Djskra and A* is the inclusion of this function.
+`heuristic `: a function that returns a integer or float that represents the likelyhood of a step being the correct one. A lower value means that the step is more likely to be correct than another with a higher `heuristic` return value. It must receive one parameter to indicate the position who's value is to be computed. The one diference between Djskra and A* is the inclusion of this function.
 
-`time_limit`: a integer or float that indicates for how long the algorithm should run. Its default value is `0` which permits it to run indefinetely.
+`time_limit`: a integer or float that indicates for how long (in seconds) the algorithm should run. Its default value is `0` which permits it to run indefinetely.
 
-`reverse`: a booean that tells the algorithm whether or not it is computing the steps from *"back to front"* (end to begining, instead of the more traditional begining to end). Setting this value to `True` speeds up the extraction of the answer in `a()` by returning a generator object instead of a list. This is generally better if the length of the answer doesnt fit in its allocated memory or if the user doesnt need to know the full path all at once, but rather just the first n-steps that bring it closer to the endpoint (for example, in a game where the path will be re-computed every few miliseconds to consider terrain changes). If set to `True` both `start` and `basecase` have to change to reflect the new direction, and sometimes also `calculate_posibles_func ` also has to change (eg: if the map is a directed graph (some directions are only permited one-way), or the `move_cost ` is diferent (uphill vs downhill)).
+`reverse`: a booean that tells the algorithm whether or not it is computing the steps from *"back to front"* (end to begining, instead of the more traditional begining to end). Setting this value to `True` speeds up the extraction of the answer in `a()` by returning a generator object instead of a list. This is generally better if the length of the answer doesnt fit in its allocated memory or if the user doesnt need to know the full path all at once, but rather just the first n-steps that bring it closer to the endpoint (for example, in a game where the path will be re-computed every few miliseconds to consider terrain changes). If set to `True` both `start` and `basecase` have to change to reflect the new direction, and sometimes `calculate_posibles_func ` also has to change (eg: if the map is a directed graph (some directions are only permited one-way), or the `move_cost ` is diferent (uphill vs downhill)).
 
 #### Example code: Maze solving
 
