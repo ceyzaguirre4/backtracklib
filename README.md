@@ -149,7 +149,7 @@ The `a()` function returns a list with all the necesary next steps (where the st
 
 More granular control can be had by passing into `a()`:
 
-`heuristic `: a function that returns a integer or float that represents the likelyhood of a step being the correct one. A lower value means that the step is more likely to be correct than another with a higher `heuristic` return value. It must receive one parameter to indicate the position who's value is to be computed. The one diference between Djskra and A* is the inclusion of this function.
+`heuristic `: a function that returns a integer or float that represents the likelyhood of a step being the correct one. A lower value means that the step is more likely to be correct than another with a higher `heuristic` return value. It must receive one parameter to indicate the position who's value is to be computed. The one diference between Dijskra and A* is the inclusion of this function.
 
 `time_limit`: a integer or float that indicates for how long (in seconds) the algorithm should run. Its default value is `0` which permits it to run indefinetely.
 
@@ -195,7 +195,7 @@ def basecase1(position):	# basecase starting from the begining
 		return True
 	return False
 
-answer1 = a(calculate_posibles, start, basecase1)  # from begining to end, returns list (no heuristic:Djskra; no time limit)
+answer1 = a(calculate_posibles, start, basecase1)  # from begining to end, returns list (no heuristic:Dijskra; no time limit)
 
 #############################
 # Starting from the end:
