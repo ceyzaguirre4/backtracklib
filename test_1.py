@@ -20,14 +20,16 @@ def calculate_posibles(parcial):
 	return ret
 
 gen = Solver(calculate_posibles, basecase)
-# answer has not been searched for
-# answer1 = gen.solutions[0]	# answer is computed
-gen.solve(num_answers=1, threading=True)
-answers = gen.solutions
 
-# def test_1():
-# 	assert basecase(answer1)
-# 	assert len(answers) == 1
+answer1 = gen.solutions[0]	# implicit solve and access
+
+gen.solve(num_answers=1, threading=True)	# explicit solve	
+answers = gen.solutions						# access
+
+def test_1():
+	assert basecase(answer1)
+	for answer in answers:
+		assert basecase(answer)
 
 if __name__ == "__main__":
 	print(answers)
