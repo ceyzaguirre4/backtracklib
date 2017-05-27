@@ -23,8 +23,7 @@ gen = Solver(calculate_posibles, basecase)
 
 answer1 = gen.solutions[0]	# implicit solve and access
 
-gen.solve(num_answers=1, threading=True)	# explicit solve	
-answers = gen.solutions						# access
+answers = gen.solve(num_answers=1, threading=True)	# explicit solve
 
 def test_1():
 	assert basecase(answer1)

@@ -63,7 +63,6 @@ class Solver:
         return self._tree
 
     def solve(self, num_answers=1, max_time=0, threading=False):
-        print("SOLVING...", end=" ")
         parcial = []
         answers = []
         time_start = time()
@@ -73,7 +72,7 @@ class Solver:
             limit = self._threaded_recursive_solve(parcial, answers, num_answers if num_answers != 0 else float('inf'), max_time, time_start)
         found_all = False if (limit and len(answers) < num_answers) else True
         self._solutions, self._time, self._found_all =  answers, time() - time_start, found_all
-        print("ANSWERS FOUND in {:.3f} seconds".format(self._time))
+        return self._solutions
 
     def _threaded_recursive_solve(self, parcial, answers, num_answers, max_time, time_start):
         for elem in self.CalcularPosibles(parcial):

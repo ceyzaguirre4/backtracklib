@@ -88,8 +88,8 @@ def calculate_posibles(parcial):
 			
 
 gen = Solver(calculate_posibles, basecase)
-gen.solve(num_answers=4, threading=True) 	# explicit solving
-answers = gen.solutions
+answers = gen.solve(num_answers=4, threading=True)	# explicit solving
+
 ~~~
 
 ### Solution Trees:
