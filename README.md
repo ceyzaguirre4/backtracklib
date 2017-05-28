@@ -135,7 +135,7 @@ Heuristics are dificult to find and generally unique to the problem. Some more g
 
 `path = a(<calculate_posibles_func>, <start>, <basecase>, [heuristic=None], [time_limit=0], [reverse=False]) `
 
-This function is designed to solve all pathfinding problems regardless of whether the map/graph/etc fits in memory, or the type of each step (but it must be hashable). In order to achieve this *"one size fits all"* solution, control over the heuristics, posible moves for any given position and start point are delegated to the user and integrated into the algorithm. They are passed into the funtion as parameters.
+This function is designed to solve all pathfinding problems regardless of whether the map/graph/etc fits in memory, or the type of each step (but it must be comparable and hashable). In order to achieve this *"one size fits all"* solution, control over the heuristics, posible moves for any given position and start point are delegated to the user and integrated into the algorithm. They are passed into the funtion as parameters.
 
 The bare minimums for a path to be found are:
 
