@@ -25,7 +25,7 @@ class _Node:
 		_Node._all_nodes[self.value] = self
 
 	def __eq__(self, other):
-		if self.value == other:
+		if other and self.value == other:
 			return True
 		return False
 

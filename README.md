@@ -135,7 +135,7 @@ Heuristics are dificult to find and generally unique to the problem. Some more g
 
 `path = a(<calculate_posibles_func>, <start>, <basecase>, [heuristic=None], [time_limit=0], [reverse=False]) `
 
-This function is designed to solve all pathfinding problems regardless of whether the map/graph/etc fits in memory, or the type of each step. In order to achieve this *"one size fits all"* solution, control over the heuristics, posible moves for any given position and start point are delegated to the user and integrated into the algorithm. They are passed into the funtion as parameters.
+This function is designed to solve all pathfinding problems regardless of whether the map/graph/etc fits in memory, or the type of each step (but it must be hashable). In order to achieve this *"one size fits all"* solution, control over the heuristics, posible moves for any given position and start point are delegated to the user and integrated into the algorithm. They are passed into the funtion as parameters.
 
 The bare minimums for a path to be found are:
 
@@ -155,7 +155,9 @@ More granular control can be had by passing into `a()`:
 
 `reverse`: a booean that tells the algorithm whether or not it is computing the steps from *"back to front"* (end to begining, instead of the more traditional begining to end). Setting this value to `True` speeds up the extraction of the answer in `a()` by returning a generator object instead of a list. This is generally better if the length of the answer doesnt fit in its allocated memory or if the user doesnt need to know the full path all at once, but rather just the first n-steps that bring it closer to the endpoint (for example, in a game where the path will be re-computed every few miliseconds to consider terrain changes). If set to `True` both `start` and `basecase` have to change to reflect the new direction, and sometimes `calculate_posibles_func ` also has to change (eg: if the map is a directed graph (some directions are only permited one-way), or the `move_cost ` is diferent (uphill vs downhill)).
 
-#### Example code: Maze solving
+#### Example code: Maze solving with tuples
+
+This example shows how to compute paths both in normal and in *back-to-front* ways (respectively). The *steps* are tuples (hashable out of the box). The first case uses Dijskra and the second uses A* with the manhattan distance as its heuristic function.
 
 ~~~python
 from A import a
@@ -207,4 +209,38 @@ def basecase2(position):		# basecase starting from the end
 	return False
 
 answer2 = a(calculate_posibles, end, basecase2, heuristic=manhattan_distance, reverse=True)  # from back to front, returns generator (includes heuristic cost function: A*)
+~~~
+
+#### Example code: Maze solving with user defined types
+
+This example builds on the previous one, only changing the *step-type* (from tuples to a user defined object). All functions remain the same, including the call to `a()`. The *step-type* must be comparable (include `__cmp__()` or `__eq__()`) and hashable (include `__hash__()`). Both functions will be used to check if a position was already checked, so they must be implemented in a way that is:
+
+1. consistent with the users map
+2. the comparison must return `True` for the same position in the map
+3. objects which compare equal have the same hash value
+
+In the following example two `Node` objects are equal if their x, y coordinates are the same (same position in the map), and two objects which are in the same position will always have the same hash value because the coordinates determine the hash value (so equal coordinates -> equal hash value).
+
+`__getitem__` was implemented to recycle the previous examples code, but is not necesary.
+
+~~~python
+class Node:
+	def __init__(self, x, y):
+		self.coordinates = x, y
+
+	def __eq__(self, other):
+		if self[0] == other[0] and self[1] == other[1]:
+			return True
+		return False
+
+	def __hash__(self):
+		return hash(self.arg)
+
+	def __getitem__(self,key):
+		return self. self.coordinates[key]
+
+# labrynth is represented by a graph of valid moves.
+labrynth = [Node(0,0), Node(1,0), Node(1,1), Node(1,2), Node(2,0), Node(3, 0), Node(3, 1), Node(4, 1), Node(4, 2), Node(4, 3), Node(3, 3), Node(3, 4), Node(3,5), Node(3, 2)]
+start = Node(0, 0)
+end = Node(3, 2)
 ~~~
