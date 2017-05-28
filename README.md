@@ -129,7 +129,7 @@ If a discretization such as described in the paragraph above is possible then th
 
 Heuristics are dificult to find and generally unique to the problem. Some more general ones will maybe be one day implemented but for now they must be defined by the user and implemented in ` calculate_posibles_func `. Heuristics that asign a higher probability of succes to any element within the set of posibles should be implemented by ordering the return iterable of ` calculate_posibles_func ` by probability (in descending order).
 
-## A*/Dijskra Pathfinding
+## A*/Dijkstra Pathfinding
 
 ### Overview:
 
@@ -149,7 +149,7 @@ The `a()` function returns a list with all the necesary next steps (where the st
 
 More granular control can be had by passing into `a()`:
 
-`heuristic `: a function that returns a integer or float that represents the likelyhood of a step being the correct one. A lower value means that the step is more likely to be correct than another with a higher `heuristic` return value. It must receive one parameter to indicate the position who's value is to be computed. The one diference between Dijskra and A* is the inclusion of this function.
+`heuristic `: a function that returns a integer or float that represents the likelyhood of a step being the correct one. A lower value means that the step is more likely to be correct than another with a higher `heuristic` return value. It must receive one parameter to indicate the position who's value is to be computed. The one diference between Dijkstra and A* is the inclusion of this function.
 
 `time_limit`: a integer or float that indicates for how long (in seconds) the algorithm should run. Its default value is `0` which permits it to run indefinetely.
 
@@ -157,7 +157,7 @@ More granular control can be had by passing into `a()`:
 
 #### Example code: Maze solving with tuples
 
-This example shows how to compute paths both in normal and in *back-to-front* ways (respectively). The *steps* are tuples (hashable out of the box). The first case uses Dijskra and the second uses A* with the manhattan distance as its heuristic function.
+This example shows how to compute paths both in normal and in *back-to-front* ways (respectively). The *steps* are tuples (hashable out of the box). The first case uses Dijkstra and the second uses A* with the manhattan distance as its heuristic function.
 
 ~~~python
 from A import a
@@ -197,7 +197,7 @@ def basecase1(position):	# basecase starting from the begining
 		return True
 	return False
 
-answer1 = a(calculate_posibles, start, basecase1)  # from begining to end, returns list (no heuristic:Dijskra; no time limit)
+answer1 = a(calculate_posibles, start, basecase1)  # from begining to end, returns list (no heuristic:Dijkstra; no time limit)
 
 #############################
 # Starting from the end:
