@@ -1,6 +1,6 @@
 # BackTrackLib
 
-Easy to use tools for eficient backtracking through recursion.
+My own take on both recursive backtracking algorithms and A*/Dijkstra Pathfinding. They are generalizations of the typical processes so as to permit any posible implementation while using whatever data-structures and heuristic functions.
 
 ## Backtracking with Solver class
 

@@ -8,7 +8,7 @@ class _rec_tree:
         self.children = []
         self.depth = depth
 
-    def add_branch(self, value):
+    def _add_branch(self, value):
         new_tree = _rec_tree(value=value, base=self, depth=self.depth + 1)
         self.children.append(new_tree)
         return new_tree
@@ -82,7 +82,7 @@ class Solver:
     def _recursive_solve(self, parcial, answers, num_answers, max_time, time_start, threaded=False):
         def _add(posible):
             parcial.append(posible)
-            self.current_node = self.current_node.add_branch(posible)
+            self.current_node = self.current_node._add_branch(posible)
         def _remove():
             parcial.pop()
             self.current_node = self.current_node.base

@@ -22,7 +22,7 @@ end = Node(3, 2)
 
 
 #############################
-# Posible heuristics:
+# Posible heuristics (for back to front):
 #############################
 
 def pythagorean_distance(position):		# heuristic n1
