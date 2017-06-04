@@ -1,6 +1,6 @@
 class NonSolver:
-	def __init__(self, CalcularPosibles, basecase):
-		self.CalcularPosibles = CalcularPosibles
+	def __init__(self, calculate_posibles, basecase):
+		self.calculate_posibles = calculate_posibles
 		self.basecase = basecase
 		self._solutions, self._time, self._found_all = [], None, None
 		self._parcial = []
@@ -10,7 +10,7 @@ class NonSolver:
 		return self._solve()
 
 	def _solve(self):
-		calcs = [self.CalcularPosibles(self._parcial)]
+		calcs = [self.calculate_posibles(self._parcial)]
 		depth = 0
 		while True:
 			if self.basecase(self._parcial):
@@ -18,9 +18,7 @@ class NonSolver:
 				self._solutions.append(copia)
 				yield copia
 			if depth == len(calcs):
-				calcs.append(self.CalcularPosibles(self._parcial))
-			elif depth > len(calcs):
-				raise Exception("depth mayor que el largo")
+				calcs.append(self.calculate_posibles(self._parcial))
 			posibles = calcs[depth]
 			if posibles:
 				self._parcial.append(posibles.pop())
@@ -31,11 +29,12 @@ class NonSolver:
 				depth -= 1
 				self._parcial.pop()
 				calcs.pop()
-		return self._parcial
 
-n_queens = 4
 
 if __name__ == "__main__":
+
+	n_queens = 8
+
 	def basecase(parcial):
 		if len(parcial) == n_queens:
 			return True
