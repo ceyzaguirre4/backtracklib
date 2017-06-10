@@ -26,7 +26,6 @@ class NonSolver:
 
 
 if __name__ == "__main__":
-
 	n_queens = 8
 
 	def basecase(partial):

@@ -127,7 +127,9 @@ In some problems inputs can be subdivided into discrete sets of elements such th
 
 If a discretization such as described in the paragraph above is possible then the algorithm can be further optimized by ordering the sets in such a way that ` calculate_posibles_func ` will access first the sets with the most elements.
 
-Heuristics are dificult to find and generally unique to the problem. Some more general ones will maybe be one day implemented but for now they must be defined by the user and implemented in ` calculate_posibles_func `. Heuristics that asign a higher probability of succes to any element within the set of posibles should be implemented by ordering the return iterable of ` calculate_posibles_func ` by probability (in descending order).
+Heuristics are dificult to generalize (normally unique to the problem). Some more general ones will maybe be one day implemented but for now they must be defined by the user and implemented in ` calculate_posibles_func `. Heuristics that asign a higher probability of succes to any element within the set of posibles should be implemented by sorting the return iterable of ` calculate_posibles_func ` by probability (in ascending order->from lower to higher probability).
+
+========================
 
 ## A*/Dijkstra Pathfinding
 

@@ -98,8 +98,8 @@ class Solver:
             posibles = self.CalcularPosibles(parcial)
             p = 0
             solved = False
-            while not solved and p < len(posibles):
-                posible = posibles[p]
+            while not solved and len(posibles):
+                posible = posibles.pop()
                 _add(posible)
                 solved = self._recursive_solve(parcial, answers, num_answers, max_time, time_start)
                 _remove()
