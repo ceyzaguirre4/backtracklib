@@ -25,7 +25,7 @@ gen = NonSolver(calculate_posibles, basecase)
 answer = gen.solutions
 
 def test_1():
-	assert basecase(answer)
+	assert basecase(next(answer))
 
 if __name__ == "__main__":
-	print(answer)
+	print(next(answer))
