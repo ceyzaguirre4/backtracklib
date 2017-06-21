@@ -165,6 +165,5 @@ def calculate_posibles(parcial):
 # uses a non recursive algorithm to backtrack
 
 queen_solver = NonSolver(calculate_posibles, basecase)
-solution_generator = queen_solver.solutions
-print(next(solution_generator))
+print(next(queen_solver.solutions))
 ~~~

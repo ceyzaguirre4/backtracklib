@@ -22,10 +22,10 @@ def calculate_posibles(parcial):
 # uses a non recursive algorithm to backtrack
 
 gen = NonSolver(calculate_posibles, basecase)
-answer = gen.solutions
+answer = next(gen.solutions)
 
 def test_1():
 	assert basecase(next(answer))
 
 if __name__ == "__main__":
-	print(next(answer))
+	print(answer)
