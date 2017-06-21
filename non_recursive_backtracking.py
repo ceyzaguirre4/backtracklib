@@ -2,7 +2,7 @@ class NonSolver:
 	def __init__(self, calculate_posibles, basecase):
 		self.calculate_posibles = calculate_posibles
 		self.basecase = basecase
-		self.solutions = self._solve()
+		self.solutions = self._solve()	# type generator object
 
 	def _solve(self):
 		partial = []
@@ -11,14 +11,14 @@ class NonSolver:
 		while True:
 			if self.basecase(partial):
 				yield partial.copy()
-			if depth == len(calcs):
+			if depth == len(calcs):		# todo: memoization
 				calcs.append(self.calculate_posibles(partial))
 			posibles = calcs[depth]
 			if posibles:
 				partial.append(posibles.pop())
 				depth += 1
 			else:
-				if not depth:
+				if not depth:	# all answers were found
 					break
 				depth -= 1
 				partial.pop()

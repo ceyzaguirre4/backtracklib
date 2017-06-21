@@ -2,7 +2,7 @@
 
 My own take on backtracking algorithms (w or w/o recursion). They are generalizations of the typical processes so as to permit any posible implementation while using whatever data-structures and heuristic functions.
 
-## Backtracking with Solver class
+## Recursive Backtracking with Solver class
 
 ### Overview:
 
@@ -128,3 +128,43 @@ In some problems inputs can be subdivided into discrete sets of elements such th
 If a discretization such as described in the paragraph above is possible then the algorithm can be further optimized by ordering the sets in such a way that ` calculate_posibles_func ` will access first the sets with the most elements.
 
 Heuristics are dificult to generalize (normally unique to the problem). Some more general ones will maybe be one day implemented but for now they must be defined by the user and implemented in ` calculate_posibles_func `. Heuristics that asign a higher probability of succes to any element within the set of posibles should be implemented by sorting the return iterable of ` calculate_posibles_func ` by probability (in ascending order->from lower to higher probability).
+
+## NonRecursive Backtracking with NonSolver class
+In development stage, this is another generalized take on backtracking implemented w/o recursive function calls so as to avoid stack calls and recursion errors.
+
+### Overview:
+` NonSolver(<calculate_posibles_func>, <basecase_func>) `
+The `NonSolver` class receives the same arguments as `Solver`, and only diferentiates itself in that its ` .solutions ` atribute is a generator class object that computes answers when requested.
+
+All the same comments on the implementation of heuristics apply.
+
+#### Example code: non recursive solution to 8 queens
+
+~~~python
+from non_recursive_backtracking import NonSolver
+
+# 8 queens problem: position 8 queens on a chessboard so that no one attacks another.
+
+def basecase(parcial):
+	if len(parcial) == 8:
+		return True
+	return False
+
+def calculate_posibles(parcial):
+	ret = []
+	for x in range(8):
+		for y in range(8):
+			is_in = False
+			for i in range(8):
+				if (x,i) in parcial or (i, y) in parcial or (x-i, y-i) in parcial or (x+i, y+i) in parcial:
+					is_in = True
+			if not is_in: 
+				ret.append((x,y))
+	return ret
+
+# uses a non recursive algorithm to backtrack
+
+queen_solver = NonSolver(calculate_posibles, basecase)
+solution_generator = queen_solver.solutions
+print(next(solution_generator))
+~~~

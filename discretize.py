@@ -1,6 +1,8 @@
 import itertools
 from threading import Thread
 
+# experimental, algorithm to analize posible separation of posible steps into discrete non-overlaping sets.
+
 def sub(l1, l2, base):
     ret = []
     for elem in l1:
