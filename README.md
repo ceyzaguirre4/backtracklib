@@ -229,12 +229,12 @@ class Node:
 		self.coordinates = x, y
 
 	def __eq__(self, other):
-		if self[0] == other[0] and self[1] == other[1]:
+		if self.coordinates == other.coordinates:	# equivalent to checking self.x, self.y == other.x, other.y
 			return True
 		return False
 
 	def __hash__(self):
-		return hash(self.arg)
+		return hash(self.coordinates)
 
 	def __getitem__(self,key):
 		return self. self.coordinates[key]
